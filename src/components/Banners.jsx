@@ -8,7 +8,6 @@ import visionProDesktop from "/assets/banner-visionpro-desktop.png";
 import playstationDesktop from "/assets/banner-playstation-desktop.png";
 import macbookDesktop from "/assets/banner-macbook-desktop.png";
 
-
 const Banners = () => {
   return (
     <section className="lg:flex">
@@ -80,21 +79,25 @@ const Banners = () => {
         </div>
       </div>
 
-      <div className="bg-primary-gray text-center p-[2em] md:w-full md:flex items-center justify-between md:p-0 lg:order-2">
-        <img src={macbookMobile} alt="a laptop" className="m-auto md:hidden" />
+      <div className="bg-primary-gray text-center p-[2em] md:w-full md:flex md:pb-[2em] items-center justify-between md:p-0 lg:order-2 overflow-hidden">
+        <img src={macbookMobile} alt="a laptop" className="m-auto lg:hidden" />
+
         <img
           src={macbookDesktop}
           alt="a laptop"
-          className="md:order-2 hidden md:block"
+          className="md:order-2 hidden lg:block object-contain max-w-full h-auto"
         />
-        <div className="lg:order-1 md:text-left md:px-[5em] lg:px-[1em] xl:pl-[2em]">
+
+        <div className="lg:order-1 md:text-left md:px-[5em] lg:pl-[1em] xl:pl-[2em]">
           <p className="mt-[.5em] text-[2em] md:text-[4em] font-semibold md:font-thin tracking-wider">
             Macbook <span className="font-light md:font-semibold">Air</span>
           </p>
+
           <p className="text-mid-gray font-medium">
-            The new 15‑inch MacBook Air makes room for more of what you love
+            The new 15-inch MacBook Air makes room for more of what you love
             with a spacious Liquid Retina display.
           </p>
+
           <button className="border-2 border-black text-black shop-btn w-full md:w-auto">
             Shop Now
           </button>

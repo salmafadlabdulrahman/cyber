@@ -1,4 +1,5 @@
 import Banners from "./components/Banners";
+import Categories from "./components/Categories";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 
@@ -11,6 +12,10 @@ function App() {
       <main>
         <Hero />
         <Banners />
+
+        <section className="w-[80%] m-auto">
+          <Categories />
+        </section>
       </main>
     </>
   );
