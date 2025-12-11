@@ -4,6 +4,7 @@
 @theme {
   --color-light-gray: #F5F5F5;
   --color-grayish-white: #cfcfcf;
+  --color-primary-gray: #EDEDED;
   --color-mid-gray: #909090;
   --color-dark-gray: #989898;
   --color-darker-gray: #353535;
@@ -16,3 +17,16 @@
 body {
   font-family: "Inter", sans-serif;
 }
+
+@utility shop-btn {
+  @apply mt-[2em] rounded-md px-[2.5em] py-[.7em] cursor-pointer
+}
+
+@utility banner-card {
+  @apply text-center p-[2em] md:w-[50%] lg:flex lg:p-0 lg:items-center
+}
+
+
+/* @utility flex-items-center {
+  @apply flex items-center;
+} */
