@@ -1,30 +1,29 @@
-import cakeImg from "/assets/cake.jpg";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import productImg from "/assets/Iphone-pro.png";
 
 const ProductCard = () => {
   return (
-    <section className=" w-[250px] shadow-md rounded-2xl relative">
-      <img src={cakeImg} alt="cake" className="w-full h-[200px] rounded-t-lg" />
+    <section className="bg-light-gray w-[200px] rounded-lg p-3 pb-[1.5em] relative">
+      <FavoriteBorderIcon
+        sx={{ color: "#909090", fontSize: "1.7em" }}
+        className="right-2 cursor-pointer absolute"
+      />
+      <div className="flex flex-col justify-center items-center">
+        <div className="mt-[2em]">
+          <img src={productImg} alt="a phone" />
+        </div>
 
-      <div className="pl-[1em]">
-        <h3 className="mt-[2em]">Chocolate Hazelnut molten cake</h3>
-        <p className="line-clamp-2 mt-[.5em]">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat eius
-          necessitatibus laudantium, repellendus temporibus quia doloribus ea
-          quae exercitationem dolorem nobis consectetur sequi aperiam reiciendis
-          molestias cupiditate fugit? Eaque, earum!
-        </p>
-      </div>
-
-      <div className="flex justify-between items-center mt-[2em] pl-[1em]">
-        <p>250 EGP</p>
-        <button
-          className={`bg-purple-600 px-[1em] py-[.5em] rounded-tl-lg rounded-br-lg`}
-        >
-          {" "}
-          <span className=" text-2xl inline-block transform transition-transform duration-500 group-hover:rotate-225">
-            +{" "}
+        <div className="text-center mt-[1em]">
+          <p className="line-clamp-2 font-semibold">
+            Apple iPhone 14 Pro Max 128GB Deep Purple (MQ9T3RX/A)
+          </p>
+          <span className="block font-semibold mt-[.3em] text-[1.2em] ">
+            $900
           </span>
-        </button>
+          <button className="bg-black rounded-lg mt-[1em] text-white px-[2em] py-[.5em] cursor-pointer">
+            Buy Now
+          </button>
+        </div>
       </div>
     </section>
   );
