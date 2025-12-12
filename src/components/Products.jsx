@@ -5,7 +5,7 @@ const Products = () => {
   const [activeTab, setActiveTab] = useState("New Arrival");
 
   return (
-    <section className="mt-[5em]">
+    <section className="mt-[8em]">
       <div className="flex items-center gap-[2em] font-medium overflow-x-auto">
         <p
           className={`cursor-pointer

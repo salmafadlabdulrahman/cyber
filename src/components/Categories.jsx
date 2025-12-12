@@ -27,7 +27,7 @@ const Categories = () => {
     });
   };
   return (
-    <section className="mt-[3em]">
+    <section className="mt-[5em] lg:mt-[8em]">
       <div className="flex items-center justify-between">
         <h3 className="text-[1.2em] font-semibold">Browse By Category</h3>
         <div className="flex items-center gap-2">
