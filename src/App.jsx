@@ -1,6 +1,7 @@
 import Banners from "./components/Banners";
 import Categories from "./components/Categories";
 import Discounts from "./components/Discounts";
+import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import PopularProducts from "./components/PopularProducts";
@@ -34,6 +35,7 @@ function App() {
           <div className="hidden md:block">
             <SubBanner />
           </div>
+          <Footer />
         </section>
       </main>
     </>
