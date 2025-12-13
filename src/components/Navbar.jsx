@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -29,10 +30,10 @@ const Navbar = () => {
 
       <section className="hidden lg:block">
         <ul className="flex items-center gap-[2em] cursor-pointer">
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>Blog</li>
+          <NavLink to={"/"}>Home</NavLink>
+          <NavLink to={"/shop"}>Shop</NavLink>
+          <NavLink to={"/wish-list"}>Wish List</NavLink>
+          <NavLink to={"/contact"}>Contact</NavLink>
         </ul>
       </section>
 

@@ -4,10 +4,9 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 
-
 const Footer = () => {
   return (
-    <footer className="bg-mid-black text-grayish-white text-center lg:text-left md:flex flex-col items-center justify-center py-5 ">
+    <section className="bg-mid-black text-grayish-white text-center lg:text-left md:flex flex-col items-center justify-center py-5 ">
       <div className="lg:flex justify-center gap-[3em] xl:gap-[5em] lg:pt-[2em]">
         <div className="mt-[1em] lg:m-0 lg:w-[40%]  ">
           <img src={logo} alt="a white triangle" className="m-auto lg:m-0" />
@@ -48,7 +47,7 @@ const Footer = () => {
         <InstagramIcon sx={{ color: "white" }} />
         <EmailIcon sx={{ color: "white" }} />
       </div>
-    </footer>
+    </section>
   );
 };
 
