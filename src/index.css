@@ -26,12 +26,28 @@ body {
   @apply text-center p-[2em] md:w-[50%] lg:flex lg:p-0 lg:items-center;
 }
 
+@utility battery-capcity {
+  @apply block border-2 cursor-pointer border-[#D5D5D5] text-[#6F6F6F] px-5 py-2 rounded-md;
+}
+
+@utility features-style {
+  @apply bg-[#F4F4F4] w-[180px] h-[70px] rounded-md flex items-center px-[1em] gap-2;
+}
+
+@utility product-details-btns {
+  @apply block m-auto w-full font-medium text-xl py-2 rounded-md;
+}
+
+@utility products-free-section {
+  @apply bg-[#F6F6F6] rounded-md w-[60px] h-[50px] flex justify-center;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
   .no-scrollbar {
-    -ms-overflow-style: none; 
+    -ms-overflow-style: none;
     scrollbar-width: none;
   }
 }

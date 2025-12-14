@@ -47,17 +47,21 @@ const Shop = () => {
     <section className="p-4 lg:flex lg:mt-[2em]">
       <div className="hidden lg:block pl-[4em]">
         {filterTypes.map((type, i) => (
-          <div key={i}  onClick={() => toggleMenu(i)}>
-            <div className="flex justify-between border-b border-[#B5B5B5] py-[1em] w-[200px]">
+          <div key={i} onClick={() => toggleMenu(i)}>
+            <div className="flex justify-between border-b border-[#B5B5B5] py-[1em] w-[200px] cursor-pointer">
               <p>{type.title}</p>
               <span className="block">
                 <KeyboardArrowDownIcon className="cursor-pointer" />
               </span>
             </div>
 
-            <div className={openMenuIndex === i ? "block" : "hidden"}>
+            <div
+              className={` ${
+                openMenuIndex === i ? "block" : "hidden"
+              } mt-[1em]`}
+            >
               {filterTypes[i].items.map((item, i) => (
-                <div className="block" key={i}>
+                <div className="block mt-[.2em]" key={i}>
                   <input
                     type="checkbox"
                     id="vehicle1"
@@ -65,7 +69,7 @@ const Shop = () => {
                     value={item}
                     key={i}
                   />
-                  <label htmlFor="vehicle1" className="">
+                  <label htmlFor="vehicle1" className="pl-[.4em] font-medium">
                     {item}
                   </label>
                 </div>

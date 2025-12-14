@@ -11,9 +11,6 @@ import SubBanner from "../components/SubBanner";
 const Home = () => {
   return (
     <>
-      {/* <header>
-        <Navbar />
-      </header> */}
       <section>
         <Hero />
         <Banners />
@@ -35,7 +32,6 @@ const Home = () => {
           <div className="hidden md:block">
             <SubBanner />
           </div>
-          {/* <Footer /> */}
         </section>
       </section>
     </>
