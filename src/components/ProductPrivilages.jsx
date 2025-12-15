@@ -4,7 +4,7 @@ import verify from "/assets/verify.png";
 
 const ProductPrivilages = () => {
   return (
-    <div className="mt-[2em] flex items-center justify-between">
+    <div className="mt-[2em] flex flex-wrap items-center justify-center lg:justify-start gap-5">
       <div className="flex flex-col justify-center items-center">
         <div className="products-free-section">
           <img src={truck} alt="a gray truck" className="m-auto" />

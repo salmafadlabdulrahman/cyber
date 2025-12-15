@@ -47,10 +47,10 @@ const Shop = () => {
     <section className="p-4 lg:flex lg:mt-[2em]">
       <div className="hidden lg:block pl-[4em]">
         {filterTypes.map((type, i) => (
-          <div key={i} onClick={() => toggleMenu(i)}>
+          <div key={i}>
             <div className="flex justify-between border-b border-[#B5B5B5] py-[1em] w-[200px] cursor-pointer">
               <p>{type.title}</p>
-              <span className="block">
+              <span className="block" onClick={() => toggleMenu(i)}>
                 <KeyboardArrowDownIcon className="cursor-pointer" />
               </span>
             </div>
