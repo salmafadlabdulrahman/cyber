@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -39,7 +39,10 @@ const Navbar = () => {
 
       <section className="hidden lg:flex items-center gap-2 cursor-pointer">
         <FavoriteBorderIcon />
-        <ShoppingCartIcon />
+        <Link to={"/cart"}>
+          <ShoppingCartIcon />
+        </Link>
+
         <PersonOutlineIcon />
       </section>
     </nav>
