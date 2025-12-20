@@ -71,15 +71,12 @@ const Checkout = () => {
             className="block border border-dark-black p-2 rounded-md w-full"
           />
         </div>
-      </div>
 
-      <div className="flex items-center justify-end gap-5 mt-[2em] ">
-        <button className="cursor-pointer border-2 border-dark-black rounded-md px-[2em] py-[.3em]">
-          Back
-        </button>
-        <button className="cursor-pointer bg-dark-black text-white rounded-md px-[2em] py-[.4em]">
-          Next
-        </button>
+        <div className="flex justify-end">
+          <button className="cursor-pointer bg-dark-black text-white rounded-md px-[2em] py-[.4em] mt-[2em]">
+            Next
+          </button>
+        </div>
       </div>
     </section>
   );
