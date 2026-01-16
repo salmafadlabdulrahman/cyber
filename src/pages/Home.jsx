@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import Banners from "../components/Banners";
 import Categories from "../components/Categories";
 import Discounts from "../components/Discounts";
@@ -27,6 +28,12 @@ const Home = () => {
         <section className="w-[80%] m-auto">
           <Discounts />
         </section>
+
+        {/* <section>
+          {products.data.map((product) => (
+            <p>{product.name}</p>
+          ))}
+        </section> */}
 
         <section>
           <div className="hidden md:block">
