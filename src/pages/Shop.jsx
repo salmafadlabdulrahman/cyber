@@ -4,11 +4,12 @@ import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import qs from "qs";
+import { useSearchParams } from "react-router-dom";
 
 const fetchProducts = async ({ queryKey }) => {
-  const [_key, { categories, priceRanges }] = queryKey;
+  const [_key, { categories, priceRanges, page }] = queryKey;
 
   const params = {};
 
@@ -21,16 +22,14 @@ const fetchProducts = async ({ queryKey }) => {
   }
 
   console.log("Params being sent:", params);
+  params.page = page;
 
   try {
-    const response = await axios.get(
-    "http://localhost:3000/api/v1/products",
-    {
+    const response = await axios.get("http://localhost:3000/api/v1/products", {
       params,
       paramsSerializer: (params) =>
         qs.stringify(params, { arrayFormat: "repeat" }),
-    }
-  );
+    });
     console.log("Request URL:", response.config.url);
     console.log(response.data);
     return response.data;
@@ -53,20 +52,48 @@ const priceRangesArr = [
   { id: "0-10", label: "$0 - $10", min: 0, max: 10 },
   { id: "10-50", label: "$10 - $50", min: 10, max: 50 },
   { id: "50-100", label: "$50 - $100", min: 50, max: 100 },
-  { id: "300-500", label: "$100 - $200", min: 100, max: 200 },
+  { id: "100-200", label: "$100 - $200", min: 100, max: 200 },
   { id: "200+", label: "> $200", min: 200, max: null },
 ];
 
 const Shop = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategories, setSelectedCategories] = useState(
+    () => searchParams.get("category")?.split(",") || []
+  );
+
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState(
+    () => searchParams.get("priceRanges")?.split(",") || []
+  );
+
+  const [page, setPage] = useState(() => Number(searchParams.get("page")) || 1);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (selectedCategories.length > 0) {
+      params.set("category", selectedCategories.join(","));
+    }
+
+    if (selectedPriceRanges.length > 0) {
+      params.set("priceRanges", selectedPriceRanges.join(","));
+    }
+
+    params.set("page", page.toString());
+
+    setSearchParams(params);
+  }, [selectedCategories, selectedPriceRanges, page, setSearchParams]);
 
   const results = useQueries({
     queries: [
       {
         queryKey: [
           "productsData",
-          { categories: selectedCategories, priceRanges: selectedPriceRanges },
+          {
+            categories: selectedCategories,
+            priceRanges: selectedPriceRanges,
+            page,
+          },
         ],
         queryFn: fetchProducts,
         keepPreviousData: true,
@@ -113,6 +140,7 @@ const Shop = () => {
                 <Checkbox
                   checked={selectedCategories.includes(category._id)}
                   onCheckedChange={(checked) => {
+                    setPage(1);
                     setSelectedCategories((prev) =>
                       checked
                         ? [...prev, category._id]
@@ -137,6 +165,7 @@ const Shop = () => {
                   id="category"
                   checked={selectedPriceRanges.includes(range.id)}
                   onCheckedChange={(checked) => {
+                    setPage(1);
                     setSelectedPriceRanges((prev) =>
                       checked
                         ? [...prev, range.id]
@@ -156,7 +185,7 @@ const Shop = () => {
       <div className="flex-1">
         {" "}
         <div className="p-4 lg:p-0 lg:m-auto ">
-          <section className="flex items-center justify-center flex-wrap gap-5 mt-[2em] min-h-[500px]">
+          <section className="flex items-center  flex-wrap gap-5 mt-[2em] min-h-[500px]">
             {products?.data?.length === 0 && !productsLoading ? (
               <div className="w-full flex items-center justify-center text-gray-500">
                 <p>No Products were found!</p>
@@ -176,7 +205,13 @@ const Shop = () => {
         </div>
         <div className="flex justify-center mt-[5em]">
           <Stack spacing={2}>
-            <Pagination count={10} variant="outlined" shape="rounded" />
+            <Pagination
+              page={page}
+              count={products?.pagination?.totalPages}
+              onChange={(_, value) => setPage(value)}
+              variant="outlined"
+              shape="rounded"
+            />
           </Stack>
         </div>
       </div>
