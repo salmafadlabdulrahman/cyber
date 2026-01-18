@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import Banners from "../components/Banners";
 import Categories from "../components/Categories";
 import Discounts from "../components/Discounts";
