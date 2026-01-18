@@ -1,5 +1,6 @@
 import HeroSm from "/assets/hero-img-mobile.png";
 import HeroLg from "/assets/hero-img-desktop.png";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -16,9 +17,11 @@ const Hero = () => {
           <p className="text-mid-gray font-medium mt-[1em] lg:text-[1.3em]">
             Created to charge everything for the better. For everyone
           </p>
-          <button className="border border-white text-white shop-btn">
-            Shop Now
-          </button>
+          <Link to={"/shop"}>
+            <button className="border border-white text-white shop-btn">
+              Shop Now
+            </button>
+          </Link>
         </section>
 
         <img

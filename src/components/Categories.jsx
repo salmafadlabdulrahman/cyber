@@ -7,8 +7,8 @@ import HeadphonesIcon from "@mui/icons-material/Headphones";
 import ComputerIcon from "@mui/icons-material/Computer";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import { useRef } from "react";
-
-//Will have categories handled in the backend. LATER!
+import { useCategories } from "@/queries/useCategories";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const scrollRef = useRef(null);
@@ -26,6 +26,24 @@ const Categories = () => {
       behavior: "smooth",
     });
   };
+
+  const {
+    data: categories,
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+  } = useCategories();
+
+  if (categoriesLoading) {
+    return <h1>Loading</h1>;
+  }
+
+  if (categoriesError) {
+    console.log(categoriesError);
+    return <h1>Error</h1>;
+  }
+
+  console.log(categories);
+
   return (
     <section className="mt-[5em] lg:mt-[8em]">
       <div className="flex items-center justify-between">
@@ -45,35 +63,14 @@ const Categories = () => {
         className="mt-[2em] flex gap-4 lg:justify-center overflow-x-auto scroll-smooth no-scrollbar"
         ref={scrollRef}
       >
-        <div className="bg-primary-gray w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
-          <StayCurrentPortraitIcon sx={{ fontSize: "2em" }} />
-          <p className="mt-[.5em] font-medium">Phones</p>
-        </div>
-
-        <div className="bg-primary-gray w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
-          <WatchIcon sx={{ fontSize: "2em" }} />
-          <p className="mt-[.5em] font-medium">Smart Watches</p>
-        </div>
-
-        <div className="bg-primary-gray w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
-          <CameraAltIcon sx={{ fontSize: "2em" }} />
-          <p className="mt-[.5em] font-medium">Cameras</p>
-        </div>
-
-        <div className="bg-primary-gray w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
-          <HeadphonesIcon sx={{ fontSize: "2em" }} />
-          <p className="mt-[.5em] font-medium">Headphones</p>
-        </div>
-
-        <div className="bg-primary-gray w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
-          <ComputerIcon sx={{ fontSize: "2em" }} />
-          <p className="mt-[.5em] font-medium">Cameras</p>
-        </div>
-
-        <div className="bg-primary-gray w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
-          <SportsEsportsIcon sx={{ fontSize: "2em" }} />
-          <p className="mt-[.5em] font-medium">Gaming</p>
-        </div>
+        {categories.map((category, i) => (
+          <Link key={i} to={`/shop/?category=${category._id}`}>
+            <div className="border border-primary-gray cursor-pointer uppercase w-[140px] h-[90px] shrink-0 rounded-lg text-center flex flex-col items-center justify-center">
+              {/* <StayCurrentPortraitIcon sx={{ fontSize: "2em" }} /> */}
+              <p className="font-medium px-[1em]">{category.name}</p>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );

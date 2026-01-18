@@ -1,53 +1,12 @@
 import { Pagination, Stack } from "@mui/material";
 import ProductCard from "../components/ProductCard";
-import { useQueries } from "@tanstack/react-query";
-import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
-import qs from "qs";
 import { Link, useSearchParams } from "react-router-dom";
 import ProductSkeleton from "@/components/ProductSkeleton";
-
-const fetchProducts = async ({ queryKey }) => {
-  const [_key, { categories, priceRanges, page }] = queryKey;
-
-  const params = {};
-
-  if (categories.length > 0) {
-    params.category = categories.join(",");
-  }
-
-  if (priceRanges.length > 0) {
-    params.priceRanges = priceRanges;
-  }
-
-  console.log("Params being sent:", params);
-  params.page = page;
-
-  try {
-    const response = await axios.get("http://localhost:3000/api/v1/products", {
-      params,
-      paramsSerializer: (params) =>
-        qs.stringify(params, { arrayFormat: "repeat" }),
-    });
-    console.log("Request URL:", response.config.url);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const fetchCategories = async () => {
-  try {
-    const response = await axios.get("http://localhost:3000/api/v1/categories");
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { useProducts } from "@/queries/useProducts";
+import { useCategories } from "@/queries/useCategories";
 
 const priceRangesArr = [
   { id: "0-10", label: "$0 - $10", min: 0, max: 10 },
@@ -60,11 +19,11 @@ const priceRangesArr = [
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategories, setSelectedCategories] = useState(
-    () => searchParams.get("category")?.split(",") || []
+    () => searchParams.get("category")?.split(",") || [],
   );
 
   const [selectedPriceRanges, setSelectedPriceRanges] = useState(
-    () => searchParams.get("priceRanges")?.split(",") || []
+    () => searchParams.get("priceRanges")?.split(",") || [],
   );
 
   const [page, setPage] = useState(() => Number(searchParams.get("page")) || 1);
@@ -85,37 +44,21 @@ const Shop = () => {
     setSearchParams(params);
   }, [selectedCategories, selectedPriceRanges, page, setSearchParams]);
 
-  const results = useQueries({
-    queries: [
-      {
-        queryKey: [
-          "productsData",
-          {
-            categories: selectedCategories,
-            priceRanges: selectedPriceRanges,
-            page,
-          },
-        ],
-        queryFn: fetchProducts,
-        keepPreviousData: true,
-      },
-      { queryKey: ["categoriesData"], queryFn: fetchCategories },
-    ],
-  });
-
-  const [productsResults, categoriesResults] = results;
-
   const {
     data: products,
     isLoading: productsLoading,
     isError: productsError,
-  } = productsResults;
-  
+  } = useProducts({
+    categories: selectedCategories,
+    priceRanges: selectedPriceRanges,
+    page,
+  });
+
   const {
     data: categories,
     isLoading: categoriesLoading,
     isError: categoriesError,
-  } = categoriesResults;
+  } = useCategories();
 
   if (productsLoading && categoriesLoading) {
     return "Loading";
@@ -146,7 +89,7 @@ const Shop = () => {
                     setSelectedCategories((prev) =>
                       checked
                         ? [...prev, category._id]
-                        : prev.filter((id) => id !== category._id)
+                        : prev.filter((id) => id !== category._id),
                     );
                   }}
                 />
@@ -171,7 +114,7 @@ const Shop = () => {
                     setSelectedPriceRanges((prev) =>
                       checked
                         ? [...prev, range.id]
-                        : prev.filter((id) => id !== range.id)
+                        : prev.filter((id) => id !== range.id),
                     );
                   }}
                 />

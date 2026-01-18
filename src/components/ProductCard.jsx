@@ -25,11 +25,10 @@ const ProductCard = ({ name, price, img }) => {
 
         <div className="text-center mt-[1em]">
           <p className="line-clamp-2 font-semibold">
-            {/* Apple iPhone 14 Pro Max 128GB Deep Purple (MQ9T3RX/A) */}
             {name}
           </p>
           <span className="block font-semibold mt-[.3em] text-[1.2em] ">
-            {/* $900 */}${price}
+            ${price}
           </span>
           <button className="bg-black rounded-lg mt-[1em] text-white px-[2em] py-[.5em] cursor-pointer">
             Buy Now

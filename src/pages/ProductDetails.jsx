@@ -1,59 +1,9 @@
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import WarehouseIcon from "@mui/icons-material/Warehouse";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import ProductPrivilages from "../components/ProductPrivilages";
 import ProductCard from "../components/ProductCard";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useQueries } from "@tanstack/react-query";
+import { Link, useParams } from "react-router-dom";
 import ProductSpec from "@/components/ProductSpec";
+import { useProduct, useRelatedProducts } from "@/queries/useProducts";
 
-const fetchProduct = async ({ queryKey }) => {
-  const [_key, filter] = queryKey;
-
-  const params = {};
-  params.id = filter;
-
-  try {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/products/${filter}`,
-    );
-
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const fetchRelatedProducts = async ({ queryKey }) => {
-  try {
-    const [_key, currentProductId] = queryKey;
-
-    //fetch the current product
-    const productResponse = await axios.get(
-      `http://localhost:3000/api/v1/products/${currentProductId}`,
-    );
-
-    const currentProduct = productResponse.data;
-
-    //fetch the related products that has the same brand
-    const brandProducts = await axios.get(
-      `http://localhost:3000/api/v1/products?brand=${currentProduct.brand}`,
-    );
-    console.log(brandProducts);
-
-    const relatedProducts = brandProducts.data.data.filter(
-      (product) => product._id !== currentProductId,
-    );
-
-    console.log(relatedProducts);
-
-    return relatedProducts;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 const calculateOriginalPrice = (discountedPrice, discountPercent) => {
   const discountDecimal = discountPercent / 100;
@@ -73,32 +23,12 @@ const colors = {
 
 const ProductDetails = () => {
   const { productId } = useParams();
-  const results = useQueries({
-    queries: [
-      {
-        queryKey: ["product", productId],
-        queryFn: fetchProduct,
-      },
-      {
-        queryKey: ["relatedProducts", productId],
-        queryFn: fetchRelatedProducts,
-        enabled: !!productId,
-      },
-    ],
-  });
-
-  const [productData, relatedProducts] = results;
-
-  const {
-    data: product,
-    isLoading: productLoading,
-    isError: productError,
-  } = productData;
+  const { data: product, isLoading: productLoading, isError: productError} = useProduct(productId);
   const {
     data: relatedProductsData,
     isLoading: relatedProductsLoading,
     isError: relatedProductsError,
-  } = relatedProducts;
+  } = useRelatedProducts(productId);
 
   if (productLoading || relatedProductsLoading) {
     return <h1>Loading...</h1>;
@@ -116,16 +46,16 @@ const ProductDetails = () => {
             src={product?.images[0]}
             alt="a phone image"
             width={300}
-            className="m-auto h-full lg:w-[350px]"
+            className="m-auto h-full lg:w-[350px] lg:order-2"
           />
 
-          <div className="flex items-center justify-center mt-[3em] gap-[1.5em]">
+          <div className="flex lg:flex-col lg:order-1 items-center justify-center mt-[3em] gap-[1.5em]">
             {product?.images.map((image, i) => (
               <img src={image} alt="" width={100} key={i} />
             ))}
           </div>
 
-          <div className="lg:w-[50%]">
+          <div className="lg:w-[50%] lg:order-3">
             <h2 className="mt-[1em] text-[2em] font-semibold md:text-center lg:text-left">
               {product?.name}
             </h2>
@@ -189,14 +119,15 @@ const ProductDetails = () => {
           <h4 className="text-2xl font-semibold">Related Products</h4>
           <div className="flex items-center gap-4 flex-wrap mt-[1em]">
             {relatedProductsData?.map((product, i) => (
-              <ProductCard
-                key={i}
-                name={product.name}
-                price={product.price}
-                img={product.images[0]}
-              />
+              <Link key={i} to={`/shop/${product._id}`}>
+                <ProductCard
+                  name={product.name}
+                  price={product.price}
+                  img={product.images[0]}
+                  key={i}
+                />
+              </Link>
             ))}
-
           </div>
         </div>
       </div>
