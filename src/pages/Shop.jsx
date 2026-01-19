@@ -54,6 +54,8 @@ const Shop = () => {
     page,
   });
 
+  console.log(products);
+
   const {
     data: categories,
     isLoading: categoriesLoading,
@@ -144,9 +146,9 @@ const Shop = () => {
                 <Link key={i} to={`/shop/${product._id}`}>
                   <div>
                     <ProductCard
-                      name={product.name}
-                      price={product.price}
-                      img={product.images[0]}
+                      {...product}
+                      isNew={product?.new}
+                      img={product?.images[0]}
                     />
                   </div>
                 </Link>

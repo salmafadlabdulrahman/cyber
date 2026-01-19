@@ -51,3 +51,35 @@ export const getRelatedProducts = async (productId) => {
     console.log(error);
   }
 };
+
+export const getNewProducts = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/products/new-arrivals`);
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFeaturedProducts = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/products/featured`);
+    console.log(res.data)
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+getFeaturedProducts()
+
+
+export const getBestSellers = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/products/best-sellers`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

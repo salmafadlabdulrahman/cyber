@@ -24,10 +24,8 @@ const ProductCard = ({ name, price, img }) => {
         </div>
 
         <div className="text-center mt-[1em]">
-          <p className="line-clamp-2 font-semibold">
-            {name}
-          </p>
-          <span className="block font-semibold mt-[.3em] text-[1.2em] ">
+          <p className="line-clamp-2 font-semibold">{name}</p>
+          <span className="block font-semibold mt-[.3em] text-[1.2em]">
             ${price}
           </span>
           <button className="bg-black rounded-lg mt-[1em] text-white px-[2em] py-[.5em] cursor-pointer">
@@ -35,6 +33,18 @@ const ProductCard = ({ name, price, img }) => {
           </button>
         </div>
       </div>
+
+      {/* {isNew && (
+        <span className="bg-[#6610F2] flex justify-center items-center absolute top-2.5 font-semibold rounded-full w-[35px] text-white h-[35px] text-[12px]">
+          New
+        </span>
+      )}
+      {isBestSeller && (
+        <span className="bg-[#6610F2] flex justify-center items-center absolute top-2.5 font-semibold rounded-full w-[35px] text-white h-[35px] text-[12px]">
+          New
+        </span>
+      )} */}
+      
     </section>
   );
 };

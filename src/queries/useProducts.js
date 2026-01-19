@@ -2,6 +2,9 @@ import {
   getProductById,
   getProducts,
   getRelatedProducts,
+  getNewProducts,
+  getFeaturedProducts,
+  getBestSellers,
 } from "@/api/products.api";
 import { useQuery } from "@tanstack/react-query";
 
@@ -28,5 +31,26 @@ export const useRelatedProducts = (productId) => {
     queryKey: ["relatedProducts", productId],
     queryFn: () => getRelatedProducts(productId),
     enabled: !!productId,
+  });
+};
+
+export const useNewProducts = () => {
+  return useQuery({
+    queryKey: ["newProducts"],
+    queryFn: () => getNewProducts(),
+  });
+};
+
+export const useFeaturedProducts = () => {
+  return useQuery({
+    queryKey: ["featuredProducts"],
+    queryFn: () => getFeaturedProducts(),
+  });
+};
+
+export const useBestSellersProducts = () => {
+  return useQuery({
+    queryKey: ["bestSellersProducts"],
+    queryFn: () => getBestSellers(),
   });
 };
