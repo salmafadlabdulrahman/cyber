@@ -17,8 +17,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       await axios.post(`${API_URL}/auth/logout`);
-      alert("logged out successfully");
-      navigate("/signup");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -64,9 +63,9 @@ const Navbar = () => {
 
         {/* <PersonOutlineIcon /> */}
 
-        <div className="bg-indigo-600 text-white px-[.8em] py-[.4em] rounded-full">
+        {/* <div className="bg-indigo-600 text-white px-[.8em] py-[.4em] rounded-full">
           S
-        </div>
+        </div> */}
       </section>
 
       {user && (

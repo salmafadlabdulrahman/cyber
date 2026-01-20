@@ -14,7 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "@/api/auth.api";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -26,6 +28,9 @@ const formSchema = z.object({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,6 +41,26 @@ const Login = () => {
 
   const onSubmit = async (values) => {
     console.log("Form submitted:", values);
+    try {
+      const payload = {
+        email: values.email,
+        password: values.password,
+      };
+      const data = await login(payload);
+      console.log(data);
+      if (data.success) {
+        navigate("/");
+      } else {
+        // Handle backend success: false
+        setError(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.log(error);
+      const message = error.response?.data?.message || "Login failed";
+      setError(error.response?.data?.message || "Invalid credentials");
+
+      console.error(message);
+    }
   };
 
   return (
@@ -93,6 +118,7 @@ const Login = () => {
               <Button type="submit" className={"cursor-pointer"}>
                 Login
               </Button>
+              {error && <p className="text-red-500">{error}</p>}
             </form>
           </Form>
         </div>

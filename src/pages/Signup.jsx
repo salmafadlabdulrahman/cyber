@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/api/auth.api";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -30,6 +31,8 @@ const formSchema = z.object({
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,10 +51,20 @@ const Signup = () => {
         password: values.password,
       };
 
-      await signUp(payload);
-      navigate("/");
+      const data = await signUp(payload);
+      console.log(data);
+      if (data.success) {
+        navigate("/");
+      } else {
+        // Handle backend success: false
+        setError(data.message || "Login failed");
+      }
     } catch (error) {
-      console.log(error.response?.data?.message);
+      console.log(error);
+      const message = error.response?.data?.message || "Login failed";
+      setError(error.response?.data?.message || "Invalid credentials");
+
+      console.error(message);
     }
   };
 
@@ -124,7 +137,7 @@ const Signup = () => {
                   </FormItem>
                 )}
               />
-
+              {error && <p className="text-red-500">{error}</p>}
               <Button type="submit" className="w-full">
                 Create Account
               </Button>
