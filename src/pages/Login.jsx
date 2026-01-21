@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { login } from "@/api/auth.api";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -30,6 +31,7 @@ const formSchema = z.object({
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const { user } = useContext(AuthContext);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -38,6 +40,10 @@ const Login = () => {
       password: "",
     },
   });
+
+  if (user) {
+    return <Navigate to={"/"} />;
+  }
 
   const onSubmit = async (values) => {
     console.log("Form submitted:", values);
@@ -51,7 +57,6 @@ const Login = () => {
       if (data.success) {
         navigate("/");
       } else {
-        // Handle backend success: false
         setError(data.message || "Login failed");
       }
     } catch (error) {

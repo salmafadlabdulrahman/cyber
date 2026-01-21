@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const API_URL = `http://localhost:3000/api/v1`;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,6 +12,7 @@ export const AuthProvider = ({children}) => {
       const res = await axios.get(`${API_URL}/auth/me`, {
         withCredentials: true,
       });
+      console.log(res)
       setUser(res.data.user);
     } catch (error) {
       console.log(error);
@@ -26,7 +27,7 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

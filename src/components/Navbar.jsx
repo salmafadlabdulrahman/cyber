@@ -2,6 +2,7 @@ import logo from "/assets/logo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
@@ -11,12 +12,13 @@ import axios from "axios";
 const API_URL = `http://localhost:3000/api/v1`;
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const logout = async () => {
     try {
       await axios.post(`${API_URL}/auth/logout`);
+      setUser(null);
       navigate("/login");
     } catch (error) {
       console.log(error);
@@ -62,6 +64,9 @@ const Navbar = () => {
         </Link>
 
         {/* <PersonOutlineIcon /> */}
+        <Link to={"/dashboard"}>
+          <DashboardIcon />
+        </Link>
 
         {/* <div className="bg-indigo-600 text-white px-[.8em] py-[.4em] rounded-full">
           S

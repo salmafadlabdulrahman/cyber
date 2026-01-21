@@ -71,9 +71,6 @@ export const getFeaturedProducts = async () => {
   }
 };
 
-getFeaturedProducts()
-
-
 export const getBestSellers = async () => {
   try {
     const res = await axios.get(`${API_URL}/products/best-sellers`);

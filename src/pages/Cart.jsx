@@ -5,8 +5,17 @@ import ClearIcon from "@mui/icons-material/Clear";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import OrderSummary from "../components/OrderSummary";
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const Cart = () => {
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to={"/signup"} />;
+  }
+
   return (
     <section className="w-[90%] m-auto">
       <h3 className="text-2xl font-semibold">Shopping Cart</h3>

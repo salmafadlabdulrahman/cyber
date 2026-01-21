@@ -45,6 +45,18 @@ body {
   @apply bg-[#F6F6F6] rounded-md w-[60px] h-[50px] flex justify-center;
 }
 
+@utility cards-style {
+  @apply border border-light-gray shadow-md rounded-lg  
+      relative cursor-pointer hover:shadow-xl 
+    hover:-translate-y-1
+    transition-all 
+    duration-300;
+}
+
+@utility sidebar-hover {
+  @apply px-3 py-2.5 rounded-md cursor-pointer transition-all duration-200 hover:bg-violet-500 hover:text-white;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

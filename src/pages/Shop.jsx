@@ -54,8 +54,6 @@ const Shop = () => {
     page,
   });
 
-  console.log(products);
-
   const {
     data: categories,
     isLoading: categoriesLoading,
@@ -91,12 +89,12 @@ const Shop = () => {
                     setSelectedCategories((prev) =>
                       checked
                         ? [...prev, category._id]
-                        : prev.filter((id) => id !== category._id),
+                        : prev.filter((id) => id !== category?._id),
                     );
                   }}
                 />
                 <Label className={"text-md font-normal "}>
-                  {category.name}
+                  {category?.name}
                 </Label>
               </div>
             ))}
@@ -107,10 +105,10 @@ const Shop = () => {
           <h5 className="font-semibold my-[1em]">Price Range</h5>
           <div className="">
             {priceRangesArr.map((range) => (
-              <div className="flex items-center gap-2 mb-2" key={range.label}>
+              <div className="flex items-center gap-2 mb-2" key={range?.label}>
                 <Checkbox
                   id="category"
-                  checked={selectedPriceRanges.includes(range.id)}
+                  checked={selectedPriceRanges.includes(range?.id)}
                   onCheckedChange={(checked) => {
                     setPage(1);
                     setSelectedPriceRanges((prev) =>
@@ -121,7 +119,7 @@ const Shop = () => {
                   }}
                 />
                 <Label htmlFor="category" className={"text-md font-normal"}>
-                  {range.label}
+                  {range?.label}
                 </Label>
               </div>
             ))}

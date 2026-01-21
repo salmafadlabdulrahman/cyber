@@ -14,8 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/api/auth.api";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -32,6 +33,7 @@ const formSchema = z.object({
 const Signup = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const { user } = useContext(AuthContext);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -41,6 +43,10 @@ const Signup = () => {
       password: "",
     },
   });
+
+  if (user) {
+    return <Navigate to={"/"} />;
+  }
 
   const onSubmit = async (values) => {
     console.log("Form submitted:", values);

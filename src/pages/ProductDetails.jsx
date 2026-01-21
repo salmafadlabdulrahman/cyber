@@ -50,7 +50,7 @@ const ProductDetails = () => {
           />
 
           <div className="flex lg:flex-col lg:order-1 items-center justify-center mt-[3em] gap-[1.5em]">
-            {product?.images.map((image, i) => (
+            {product?.images?.map((image, i) => (
               <img src={image} alt="" width={100} key={i} />
             ))}
           </div>
@@ -119,11 +119,11 @@ const ProductDetails = () => {
           <h4 className="text-2xl font-semibold">Related Products</h4>
           <div className="flex items-center gap-4 flex-wrap mt-[1em]">
             {relatedProductsData?.map((product, i) => (
-              <Link key={i} to={`/shop/${product._id}`}>
+              <Link key={i} to={`/shop/${product?._id}`}>
                 <ProductCard
-                  name={product.name}
-                  price={product.price}
-                  img={product.images[0]}
+                  name={product?.name}
+                  price={product?.price}
+                  img={product?.images[0]}
                   key={i}
                 />
               </Link>
